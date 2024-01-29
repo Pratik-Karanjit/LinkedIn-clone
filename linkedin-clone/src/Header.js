@@ -1,18 +1,24 @@
 import React from "react";
 import "./Header.css";
+import SearchIcon from '@mui/icons-material/Search';
+import linkedin from '../src/photos/linkedin.png'
 
 // all header items go here
 const Header = () => {
   return (
     <div className="header">
-      <h1>This is header.</h1>
       <div className="header_left">
-        <img src="" alt=""></img>
+      <img src={linkedin} alt="LinkedIn Logo" />
       </div>
 
-      <div className="header_search"></div>
+      <div className="header_search">
+      <SearchIcon></SearchIcon>
+       <input type="text"></input>
+      </div>
       
-      <div className="header_right"></div>
+      <div className="header_right">
+        
+      </div>
     </div>
   );
 };
