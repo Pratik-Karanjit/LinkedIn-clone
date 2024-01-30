@@ -18,7 +18,7 @@ const Sidebar = () => {
             <img src={background} alt='background'/>
             <Avatar className='sidebar_avatar'/>
             <h2>Pratik Karanjit</h2>
-            <h2>Pratik@gmail.com</h2>
+            <h4>Pratik@gmail.com</h4>
         </div>
 
         <div className='sidebar_stats'>
