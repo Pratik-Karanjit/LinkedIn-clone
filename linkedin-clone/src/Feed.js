@@ -16,13 +16,16 @@ const Feed = () => {
 
   useEffect(() => {
     const unsubscribe = db
-      .collection("posts")
-      .orderBy("timestamp", "desc")
+      .collection("posts") //Retrieve posts from firebase collection
+      .orderBy("timestamp", "desc") //Order the posts in descending order so that the latest posts are at the top
+
+      //This sets up a real-time listener for changes in the "posts" collection.
       .onSnapshot((snapshot) =>
         setPosts(
+          //mapping through the docs of firebase collection
           snapshot.docs.map((doc) => ({
             id: doc.id,
-            data: doc.data(),
+            data: doc.data(), //All data for example name, description, message, photoUrl
           }))
         )
       );
@@ -31,9 +34,10 @@ const Feed = () => {
     return () => unsubscribe();
   }, []);
 
-  //Stops page rendering when user posts
+  //e.prevent default Stops page rendering when user posts
   const sendPost = (e) => {
     e.preventDefault();
+    //Sending data to collection with server timestamp to match the time worldwide
     db.collection("posts").add({
       name: "Pratik Karanjit",
       description: "this is test",
@@ -54,6 +58,8 @@ const Feed = () => {
           <form>
             <input
               value={input}
+              //If any input is done in the input field then take the value from it
+              //We needed to do this as the setInput useState is initialized to '' in the beginning so without onChange we wouldn't be able to type anything
               onChange={(e) => setInput(e.target.value)}
               type="text"
             />
@@ -74,9 +80,10 @@ const Feed = () => {
         </div>
       </div>
 
+      {/*Destructuring the id and data that we received from the useEffect above */}
       {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
         <Post
-          key={id}
+          key={id} //Key uniquely identifies and only renders the newest post and not the entire posts again
           name={name}
           description={description}
           message={message}
