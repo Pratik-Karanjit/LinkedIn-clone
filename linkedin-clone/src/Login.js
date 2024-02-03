@@ -16,14 +16,22 @@ function Login() {
     if (!name) {
       return alert("Please enter a full name!");
     }
+    // Use Firebase authentication to create a new user with email and password
     auth
       .createUserWithEmailAndPassword(email, password)
+
+      // Once the user is created, update their profile information (displayName and photoUrl)
+      //DisplayName and photoUrl are the variables from firebase
+      // userAuth contains information about the newly created user
       .then((userAuth) => {
         userAuth.user
           .updateProfile({
             displayName: name,
             photoUrl: profilePic,
           })
+
+          // Dispatch the login action with user information to update the Redux store
+          //email, uid, displayName and photoUrl are variables from firebase and we are getting the email and uid from userAuth
           .then(() => {
             dispatch(
               login({
@@ -41,6 +49,7 @@ function Login() {
   const loginToApp = (e) => {
     e.preventDefault();
 
+    // Use Firebase authentication to sign in a user with email and password
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userAuth) => {
@@ -62,7 +71,10 @@ function Login() {
 
       <form>
         <input
+          //By using the value attribute in this way, you're ensuring that the input field always reflects the current state.
           value={name}
+          //OnChange event handler is triggered whenever the user types or changes the content of the input field and
+          // captures the value entered by the user (e.target.value) and updates the name state using the setName function.
           onChange={(e) => setName(e.target.value)}
           placeholder="Full name(required if registering)"
           type="text"
