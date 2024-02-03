@@ -10,6 +10,8 @@ const HeaderOption = ({ avatar, Icon, title, onClick }) => {
   return (
     <div onClick={onClick} className="headerOption">
       {Icon && <Icon className="header_icon"></Icon>}
+
+      {/* If avatar is provided, keep the user email's first letter */}
       {avatar && (
         <Avatar className="headerOption_icon">{user?.email[0]}</Avatar>
       )}

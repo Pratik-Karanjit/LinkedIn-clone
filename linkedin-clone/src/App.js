@@ -13,17 +13,20 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // Set up a listener for changes in the authentication state using Firebase's onAuthStateChanged
     auth.onAuthStateChanged((userAuth) => {
       if (userAuth) {
+        // If a user is authenticated, dispatch the login action with user information to the Redux store
         dispatch(
           login({
             email: userAuth.email,
             uid: userAuth.uid,
             displayName: userAuth.displayName,
-            photoUrl: userAuth.photoUrl,
+            photoUrl: userAuth.photoURL,
           })
         );
       } else {
+        // If no user is authenticated, dispatch the logout action to the Redux store
         dispatch(logout());
       }
     });

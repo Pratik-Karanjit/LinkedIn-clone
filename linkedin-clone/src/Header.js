@@ -17,6 +17,7 @@ const Header = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
+  //This calls the reducer logout from userSlice and also signs out from firebase
   const logoutOfApp = () => {
     dispatch(logout());
     auth.signOut();

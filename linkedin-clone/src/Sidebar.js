@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "./features/userSlice";
 
 const Sidebar = () => {
+  //useSelector is a hook provided by the React Redux library that allows React components to extract data from the Redux store
   const user = useSelector(selectUser);
 
   const recentItem = (topic) => (
@@ -19,6 +20,9 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="sidebar_top">
         <img src={background} alt="background" />
+
+        {/* User's email, displayName, photoUrl are all extracted here */}
+
         <Avatar src={user.photoUrl} className="sidebar_avatar">
           {user.email[0]}
         </Avatar>
