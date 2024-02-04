@@ -9,8 +9,12 @@ import InputOption from "./InputOption";
 import Post from "./Post";
 import { firebase } from "./firebase"; // Assuming firebase.js contains Firebase initialization
 import { db } from "./firebase"; // Assuming db is the initialized Firestore instance
+import { selectUser } from "./features/userSlice";
+import { useSelector } from "react-redux";
+import FlipMove from "react-flip-move";
 
 const Feed = () => {
+  const user = useSelector(selectUser);
   const [input, setInput] = useState("");
   const [posts, setPosts] = useState([]);
 
@@ -39,10 +43,10 @@ const Feed = () => {
     e.preventDefault();
     //Sending data to collection with server timestamp to match the time worldwide
     db.collection("posts").add({
-      name: "Pratik Karanjit",
-      description: "this is test",
+      name: user.displayName,
+      description: user.email,
       message: input,
-      photoUrl: "",
+      photoUrl: user.photoUrl || "",
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
@@ -80,16 +84,18 @@ const Feed = () => {
         </div>
       </div>
 
-      {/*Destructuring the id and data that we received from the useEffect above */}
-      {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
-        <Post
-          key={id} //Key uniquely identifies and only renders the newest post and not the entire posts again
-          name={name}
-          description={description}
-          message={message}
-          photoUrl={photoUrl}
-        />
-      ))}
+      <FlipMove>
+        {/*Destructuring the id and data that we received from the useEffect above */}
+        {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
+          <Post
+            key={id} //Key uniquely identifies and only renders the newest post and not the entire posts again
+            name={name}
+            description={description}
+            message={message}
+            photoUrl={photoUrl}
+          />
+        ))}
+      </FlipMove>
     </div>
   );
 };
